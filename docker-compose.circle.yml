@@ -1,0 +1,6 @@
+version: '2'
+services:
+  central-fraud-sharing:
+    image: ${DOCKER_IMAGE}:latest
+    environment:
+     FSHARE_DATABASE_URI: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/central_fraud_sharing_functional"
