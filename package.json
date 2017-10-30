@@ -6,7 +6,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git@github.com:LevelOneProject/central-fraud-sharing.git"
+    "url": "git@github.com:mojaloop/central-fraud-sharing.git"
   },
   "config": {
     "knex": "--knexfile ./config/knexfile.js"
@@ -27,9 +27,9 @@
     "test:unit": "tapes 'test/unit/**/*.test.js'"
   },
   "dependencies": {
-    "@leveloneproject/central-services-auth": "0.2.0",
-    "@leveloneproject/central-services-error-handling": "0.3.0",
-    "@leveloneproject/central-services-shared": "0.3.0",
+    "@mojaloop/central-services-auth": "0.2.0",
+    "@mojaloop/central-services-error-handling": "0.3.0",
+    "@mojaloop/central-services-shared": "0.3.0",
     "blipp": "2.3.0",
     "bluebird": "3.5.0",
     "glob": "7.1.1",
