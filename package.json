@@ -1,9 +1,9 @@
 {
-  "name": "central-fraud-sharing",
-  "version": "1.5.0",
+  "name": "@mojaloop/central-fraud-sharing",
+  "version": "1.1.0-snapshot.4",
   "description": "A series of services designed to offer the participants an avenue to share end user and transactional information to help promote overall health of the scheme via fraud prevention.",
   "license": "Apache-2.0",
-  "private": true,
+  "private": false,
   "repository": {
     "type": "git",
     "url": "git@github.com:mojaloop/central-fraud-sharing.git"
@@ -22,14 +22,13 @@
     "test:xunit": "tape 'test/unit/**/*.test.js' | tap-xunit",
     "test:coverage": "istanbul cover tapes -- 'test/unit/**/*.test.js'",
     "test:coverage-check": "npm run test:coverage && istanbul check-coverage",
-    "test:circle": "./test/functional-runner.sh docker-compose.yml docker-compose.circle.yml .env",
     "pretest": "standard",
     "test:unit": "tapes 'test/unit/**/*.test.js'"
   },
   "dependencies": {
     "@mojaloop/central-services-auth": "0.2.0",
-    "@mojaloop/central-services-error-handling": "0.3.0",
-    "@mojaloop/central-services-shared": "0.3.0",
+    "@mojaloop/central-services-error-handling": "0.5.0",
+    "@mojaloop/central-services-shared": "0.4.0",
     "blipp": "2.3.0",
     "bluebird": "3.5.0",
     "glob": "7.1.1",
