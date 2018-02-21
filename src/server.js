@@ -12,4 +12,3 @@ module.exports = Glue.compose(Manifest, composeOptions)
     Logger.error(err)
     throw err
   })
-

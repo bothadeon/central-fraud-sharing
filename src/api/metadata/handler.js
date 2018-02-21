@@ -14,12 +14,12 @@ const extractUrls = (request) => {
   return urls
 }
 
-exports.health = (request, reply) => {
-  reply({ status: 'OK' }).code(200)
+exports.health = function (request, reply) {
+  return reply.response({ status: 'OK' }).code(200)
 }
 
-exports.metadata = (request, reply) => {
-  reply({
+exports.metadata = function (request, reply) {
+  return reply.response({
     directory: Config.HOSTNAME,
     urls: extractUrls(request)
   }).code(200)

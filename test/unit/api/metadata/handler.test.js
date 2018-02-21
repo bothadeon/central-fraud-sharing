@@ -33,12 +33,14 @@ Test('metadata handler', (handlerTest) => {
 
   handlerTest.test('health should', (healthTest) => {
     healthTest.test('return status ok', (assert) => {
-      let reply = function (response) {
-        assert.equal(response.status, 'OK')
-        return {
-          code: (statusCode) => {
-            assert.equal(statusCode, 200)
-            assert.end()
+      let reply = {
+        response: (respObj) => {
+          assert.deepEqual(respObj, {status: 'OK'})
+          return {
+            code: (statusCode) => {
+              assert.equal(statusCode, 200)
+              assert.end()
+            }
           }
         }
       }
@@ -50,11 +52,13 @@ Test('metadata handler', (handlerTest) => {
 
   handlerTest.test('metadata should', function (metadataTest) {
     metadataTest.test('return 200 httpStatus', (t) => {
-      let reply = (response) => {
-        return {
-          code: statusCode => {
-            t.equal(statusCode, 200)
-            t.end()
+      let reply = {
+        response: (respObj) => {
+          return {
+            code: statusCode => {
+              t.equal(statusCode, 200)
+              t.end()
+            }
           }
         }
       }
@@ -66,9 +70,15 @@ Test('metadata handler', (handlerTest) => {
       let host = 'example-hostname'
       let hostName = `http://${host}`
       Config.HOSTNAME = hostName
-      let reply = response => {
-        t.equal(response.directory, hostName)
-        return { code: statusCode => { t.end() } }
+      let reply = {
+        response: (respObj) => {
+          t.equal(respObj.directory, hostName)
+          return {
+            code: statusCode => {
+              t.end()
+            }
+          }
+        }
       }
 
       Handler.metadata(createRequest(), reply)
@@ -81,9 +91,15 @@ Test('metadata handler', (handlerTest) => {
         { settings: { id: 'first_route', tags: apiTags }, path: '/first' }
       ])
 
-      let reply = response => {
-        t.equal(response.urls['first_route'], `${hostName}/first`)
-        return { code: statusCode => { t.end() } }
+      let reply = {
+        response: (respObj) => {
+          t.equal(respObj.urls['first_route'], `${hostName}/first`)
+          return {
+            code: statusCode => {
+              t.end()
+            }
+          }
+        }
       }
 
       Handler.metadata(request, reply)

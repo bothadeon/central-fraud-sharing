@@ -24,7 +24,7 @@ module.exports = [
     method: 'POST',
     path: '/score/transfer',
     handler: Handler.transferScore,
-    config: {
+    options: {
       id: 'transfer_score',
       tags: tags,
       description: 'Score for transfer',
