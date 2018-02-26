@@ -2,19 +2,17 @@
 
 const Test = require('tapes')(require('tape'))
 const Config = require('../../src/lib/config')
-const Pack = require('../../package')
 const Manifest = require('../../src/manifest')
 
 Test('manifest', manifestTest => {
   manifestTest.test('connections should', connectionsTest => {
-    connectionsTest.test('have connections section', test => {
-      test.ok(Manifest.connections)
+    connectionsTest.test('have server section', test => {
+      test.ok(Manifest.server)
       test.end()
     })
 
     connectionsTest.test('have one connection with configured port', test => {
-      test.equal(Manifest.connections.length, 1)
-      test.equal(Manifest.connections[0].port, Config.PORT)
+      test.equal(Manifest.server.port, Config.PORT)
       test.end()
     })
 
@@ -23,35 +21,27 @@ Test('manifest', manifestTest => {
 
   manifestTest.test('registrations should', registrationsTest => {
     registrationsTest.test('have registrations section', test => {
-      test.ok(Manifest.registrations)
+      test.ok(Manifest.register)
       test.end()
     })
 
     registrationsTest.test('register require plugins', test => {
-      let plugins = ['inert', 'vision', 'blipp', '@mojaloop/central-services-error-handling', '@mojaloop/central-services-auth', './api']
+      let plugins = ['inert', 'vision', 'blipp', './api']
       plugins.forEach(p => {
-        test.ok(findPluginByPath(Manifest.registrations, p))
+        test.ok(findPluginByPath(Manifest.register.plugins, p))
       })
       test.end()
     })
 
     registrationsTest.test('register and configure good plugin', test => {
-      let found = findPluginByRegisterName(Manifest.registrations, 'good')
-
+      let found = findPluginByRegisterName(Manifest.register.plugins, 'good')
       test.ok(found)
-      test.equal(found.plugin.options.reporters.console.length, 3)
-      test.equal(found.plugin.options.reporters.console[0].module, 'good-squeeze')
-      test.equal(found.plugin.options.reporters.console[1].module, 'good-console')
-      test.equal(found.plugin.options.reporters.console[2], 'stdout')
       test.end()
     })
 
     registrationsTest.test('register and configure hapi-swagger plugin', test => {
-      let found = findPluginByRegisterName(Manifest.registrations, 'hapi-swagger')
-
+      let found = findPluginByRegisterName(Manifest.register.plugins, 'hapi-swagger')
       test.ok(found)
-      test.equal(found.plugin.options.info.title, 'Central Fraud Sharing API Documentation')
-      test.equal(found.plugin.options.info.version, Pack.version)
       test.end()
     })
 
@@ -69,6 +59,8 @@ let findPluginByPath = (plugins, path) => {
 
 let findPluginByRegisterName = (plugins, registerName) => {
   return plugins.find(p => {
-    return p.plugin && (typeof p.plugin === 'object') && p.plugin.register && p.plugin.register === registerName
+    if (p.plugin && (typeof p.plugin === 'string') && p.plugin && p.plugin === registerName) {
+      return p
+    }
   })
 }

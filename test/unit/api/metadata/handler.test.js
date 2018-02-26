@@ -111,10 +111,16 @@ Test('metadata handler', (handlerTest) => {
         { settings: { id: 'expected', tags: apiTags }, path: '/expected' }
       ])
 
-      let reply = response => {
-        t.equal(Object.keys(response.urls).length, 1)
-        t.equal(response.urls['expected'], '/expected')
-        return { code: statusCode => { t.end() } }
+      let reply = {
+        response: (respObj) => {
+          t.equal(Object.keys(respObj.urls).length, 1)
+          t.equal(respObj.urls['expected'], '/expected')
+          return {
+            code: statusCode => {
+              t.end()
+            }
+          }
+        }
       }
 
       Handler.metadata(request, reply)
@@ -127,11 +133,17 @@ Test('metadata handler', (handlerTest) => {
         { settings: { id: 'wrongtag', tags: ['notapi'] }, path: '/wrongtag' }
       ])
 
-      let reply = response => {
-        t.equal(Object.keys(response.urls).length, 1)
-        t.equal(response.urls['tagged'], '/tagged')
-        t.notOk(response.urls['nottagged'])
-        return { code: statusCode => { t.end() } }
+      let reply = {
+        response: (respObj) => {
+          t.equal(Object.keys(respObj.urls).length, 1)
+          t.equal(respObj.urls['tagged'], '/tagged')
+          t.notOk(respObj.urls['nottagged'])
+          return {
+            code: statusCode => {
+              t.end()
+            }
+          }
+        }
       }
 
       Handler.metadata(request, reply)
@@ -143,12 +155,17 @@ Test('metadata handler', (handlerTest) => {
         { settings: { id: 'manyargs', tags: apiTags }, path: '/somepath/{id}/{path*}/{test2}/' }
       ])
 
-      let reply = response => {
-        t.equal(response.urls['path'], '/somepath/:id')
-        t.equal(response.urls['manyargs'], '/somepath/:id/:path*/:test2/')
-        return { code: statusCode => { t.end() } }
+      let reply = {
+        response: (respObj) => {
+          t.equal(respObj.urls['path'], '/somepath/:id')
+          t.equal(respObj.urls['manyargs'], '/somepath/:id/:path*/:test2/')
+          return {
+            code: statusCode => {
+              t.end()
+            }
+          }
+        }
       }
-
       Handler.metadata(request, reply)
     })
 

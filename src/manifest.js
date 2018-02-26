@@ -46,6 +46,7 @@ module.exports = {
               },
               {
                 module: 'good-console',
+                name: 'console',
                 args: [
                   {
                     format: 'YYYY-MM-DD HH:mm:ss.SSS'

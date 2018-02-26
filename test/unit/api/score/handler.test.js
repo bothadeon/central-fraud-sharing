@@ -27,17 +27,19 @@ Test('score handler', handlerTest => {
   })
 
   handlerTest.test('userScore should', userScoreTest => {
-    userScoreTest.test('return the fraud score for a given user', test => {
+    userScoreTest.test(' return the fraud score for a given user', test => {
       const identifier = 'tel:12345'
 
-      const reply = response => {
-        test.ok(response.id)
-        test.deepEqual(response.createdDate, now)
-        test.equal(response.score, 10)
-        return {
-          code: (statusCode) => {
-            test.equal(statusCode, 200)
-            test.end()
+      let reply = {
+        response: (respObj) => {
+          test.ok(respObj.id)
+          test.deepEqual(respObj.createdDate, now)
+          test.equal(respObj.score, 10)
+          return {
+            code: (statusCode) => {
+              test.equal(statusCode, 200)
+              test.end()
+            }
           }
         }
       }
@@ -48,14 +50,16 @@ Test('score handler', handlerTest => {
     userScoreTest.test('return the fraud score for a high fraud user', test => {
       const identifier = 'tel:000999'
 
-      const reply = response => {
-        test.ok(response.id)
-        test.ok(response.createdDate)
-        test.equal(response.score, 99)
-        return {
-          code: (statusCode) => {
-            test.equal(statusCode, 200)
-            test.end()
+      let reply = {
+        response: (respObj) => {
+          test.ok(respObj.id)
+          test.ok(respObj.createdDate)
+          test.equal(respObj.score, 99)
+          return {
+            code: (statusCode) => {
+              test.equal(statusCode, 200)
+              test.end()
+            }
           }
         }
       }
@@ -66,14 +70,16 @@ Test('score handler', handlerTest => {
     userScoreTest.test('return the fraud score for a low fraud user', test => {
       const identifier = 'tel:000111'
 
-      const reply = response => {
-        test.ok(response.id)
-        test.ok(response.createdDate)
-        test.equal(response.score, 1)
-        return {
-          code: (statusCode) => {
-            test.equal(statusCode, 200)
-            test.end()
+      let reply = {
+        response: (respObj) => {
+          test.ok(respObj.id)
+          test.ok(respObj.createdDate)
+          test.equal(respObj.score, 1)
+          return {
+            code: (statusCode) => {
+              test.equal(statusCode, 200)
+              test.end()
+            }
           }
         }
       }
@@ -84,14 +90,16 @@ Test('score handler', handlerTest => {
     userScoreTest.test('return the fraud score for a blacklisted user', test => {
       const identifier = 'tel:000100'
 
-      const reply = response => {
-        test.ok(response.id)
-        test.ok(response.createdDate)
-        test.equal(response.score, 100)
-        return {
-          code: (statusCode) => {
-            test.equal(statusCode, 200)
-            test.end()
+      let reply = {
+        response: (respObj) => {
+          test.ok(respObj.id)
+          test.ok(respObj.createdDate)
+          test.equal(respObj.score, 100)
+          return {
+            code: (statusCode) => {
+              test.equal(statusCode, 200)
+              test.end()
+            }
           }
         }
       }
@@ -102,14 +110,16 @@ Test('score handler', handlerTest => {
     userScoreTest.test('default to random fraud score for invalid identifier', test => {
       const identifier = 'tel12345'
 
-      const reply = response => {
-        test.ok(response.id)
-        test.deepEqual(response.createdDate, now)
-        test.equal(response.score, 10)
-        return {
-          code: (statusCode) => {
-            test.equal(statusCode, 200)
-            test.end()
+      let reply = {
+        response: (respObj) => {
+          test.ok(respObj.id)
+          test.deepEqual(respObj.createdDate, now)
+          test.equal(respObj.score, 10)
+          return {
+            code: (statusCode) => {
+              test.equal(statusCode, 200)
+              test.end()
+            }
           }
         }
       }
@@ -140,15 +150,16 @@ Test('score handler', handlerTest => {
         execution_condition: executionCondition,
         expires_at: '2015-06-16T00:00:01.000Z'
       }
-
-      const reply = response => {
-        test.ok(response.id)
-        test.ok(response.createdDate)
-        test.ok(response.score)
-        return {
-          code: (statusCode) => {
-            test.equal(statusCode, 200)
-            test.end()
+      let reply = {
+        response: (respObj) => {
+          test.ok(respObj.id)
+          test.ok(respObj.createdDate)
+          test.ok(respObj.score)
+          return {
+            code: (statusCode) => {
+              test.equal(statusCode, 200)
+              test.end()
+            }
           }
         }
       }
@@ -176,14 +187,16 @@ Test('score handler', handlerTest => {
         expires_at: '2015-06-16T00:00:01.000Z'
       }
 
-      const reply = response => {
-        test.ok(response.id)
-        test.ok(response.createdDate)
-        test.equal(response.score, 99)
-        return {
-          code: (statusCode) => {
-            test.equal(statusCode, 200)
-            test.end()
+      let reply = {
+        response: (respObj) => {
+          test.ok(respObj.id)
+          test.ok(respObj.createdDate)
+          test.equal(respObj.score, 99)
+          return {
+            code: (statusCode) => {
+              test.equal(statusCode, 200)
+              test.end()
+            }
           }
         }
       }
@@ -211,14 +224,16 @@ Test('score handler', handlerTest => {
         expires_at: '2015-06-16T00:00:01.000Z'
       }
 
-      const reply = response => {
-        test.ok(response.id)
-        test.ok(response.createdDate)
-        test.equal(response.score, 1)
-        return {
-          code: (statusCode) => {
-            test.equal(statusCode, 200)
-            test.end()
+      let reply = {
+        response: (respObj) => {
+          test.ok(respObj.id)
+          test.ok(respObj.createdDate)
+          test.equal(respObj.score, 1)
+          return {
+            code: (statusCode) => {
+              test.equal(statusCode, 200)
+              test.end()
+            }
           }
         }
       }
@@ -246,14 +261,16 @@ Test('score handler', handlerTest => {
         expires_at: '2015-06-16T00:00:01.000Z'
       }
 
-      const reply = response => {
-        test.ok(response.id)
-        test.ok(response.createdDate)
-        test.equal(response.score, 100)
-        return {
-          code: (statusCode) => {
-            test.equal(statusCode, 200)
-            test.end()
+      let reply = {
+        response: (respObj) => {
+          test.ok(respObj.id)
+          test.ok(respObj.createdDate)
+          test.equal(respObj.score, 100)
+          return {
+            code: (statusCode) => {
+              test.equal(statusCode, 200)
+              test.end()
+            }
           }
         }
       }
