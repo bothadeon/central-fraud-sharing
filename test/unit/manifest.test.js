@@ -13,6 +13,7 @@ Test('manifest', manifestTest => {
 
     connectionsTest.test('have one connection with configured port', test => {
       test.equal(Manifest.server.port, Config.PORT)
+      test.deepEqual(Manifest.server.routes.validate.failAction(), {})
       test.end()
     })
 

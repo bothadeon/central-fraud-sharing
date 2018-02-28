@@ -2,12 +2,19 @@
 
 const Config = require('./lib/config')
 const Pack = require('../package')
+const ErrorHandling = require('@mojaloop/central-services-error-handling')
+const Boom = require('boom')
 
 module.exports = {
   server: {
     port: Config.PORT,
     routes: {
-      validate: require('@mojaloop/central-services-error-handling').validateRoutes()
+      validate: {
+        options: ErrorHandling.validateRoutes(),
+        failAction: async (request, h, err) => {
+          throw Boom.boomify(err)
+        }
+      }
     }
   },
   register: {
@@ -25,6 +32,7 @@ module.exports = {
       },
       {plugin: 'blipp'},
       {plugin: './api'},
+      {plugin: '@mojaloop/central-services-error-handling'},
       {
         plugin: 'good',
         options: {

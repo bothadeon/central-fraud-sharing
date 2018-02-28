@@ -22,7 +22,7 @@ const randomFraud = () => {
   return { id: Uuid(), createdDate, score }
 }
 
-const calculateFraud = (account = '', account2 = '') => {
+const calculateFraud = (account, account2 = '') => {
   const fraud = randomFraud()
   if (account.includes(BLACKLIST) || account2.includes(BLACKLIST)) {
     fraud.score = 100
